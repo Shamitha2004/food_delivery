@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            background-color: #E3E7E8;
+            font-family: system-ui;
+        }
+        .container {
+            width: 800px;
+            margin: auto;
+            transition: 0.5s;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .listCard li {
+            display: grid;
+            grid-template-columns: 100px repeat(3, 1fr);
+            color: #333;
+            row-gap: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .listCard li img {
+            width: 80px;
+        }
+        .listCard li button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .total {
+            font-size: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .checkout {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .checkout button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Your Cart</h1>
+        <ul class="listCard"></ul>
+        <div class="total">Total: $0</div>
+        <div class="checkout">
+            <button onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        let listCard = document.querySelector('.listCard');
+        let total = document.querySelector('.total');
+
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            listCard.innerHTML = "";
+            let totalPrice = 0;
+
+            cart.forEach((item, index) => {
+                totalPrice += item.price * item.quantity;
+                let li = document.createElement("li");
+                li.innerHTML = `
+                    <div><img src="${item.image}" /></div>
+                    <div>${item.name}</div>
+                    <div>$${item.price}</div>
+                    <div>
+                        <button onclick="changeQuantity(${index}, ${item.quantity - 1})">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="changeQuantity(${index}, ${item.quantity + 1})">+</button>
+                    </div>
+                `;
+                listCard.appendChild(li);
+            });
+
+            total.innerText = `Total: $${totalPrice}`;
+        }
+
+        function changeQuantity(index, quantity) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            if (quantity <= 0) {
+                cart.splice(index, 1); // Remove item if quantity is 0
+            } else {
+                cart[index].quantity = quantity;
+                cart[index].price = cart[index].originalPrice * quantity;
+            }
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
+
+        function checkout() {
+            alert("Proceeding to checkout...");
+        }
+
+        window.onload = loadCart;
+    </script>
+
+</body>
+</html>

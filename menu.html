@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+    background-color: #E3E7E8;
+    font-family: system-ui;
+}
+.container{
+    width: 1000px;
+    margin: auto;
+    transition: 0.5s;
+}
+header{
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    margin-top: 50px;
+}
+header .shopping{
+    position: relative;
+    text-align: right;
+}
+header .shopping img{
+    width: 40px;
+}
+header .shopping span{
+    background: red;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    position: absolute;
+    top: -5px;
+    left: 80%;
+    padding: 3px 10px;
+}
+.list{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 20px;
+    row-gap: 20px;
+    margin-top: 50px;
+}
+.list .item{
+    text-align: center;
+    background-color: #DCE0E1;
+    padding: 20px;
+    box-shadow: 0 50px 50px #757676;
+    letter-spacing: 1px;
+}
+.list .item img{
+    width: 100%;
+    height: 430px;
+    object-fit: cover;
+}
+.list .item .title{
+    font-weight: 600;
+}
+.list .item .price{
+    margin: 10px;
+}
+.list .item button{
+    background-color: #1C1F25;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+}
+.card{
+    position: fixed;
+    top:0;
+    left: 100%;
+    width: 500px;
+    background-color: #453E3B;
+    height: 100vh;
+    transition: 0.5s;
+}
+.active .card{
+    left: calc(100% - 500px);
+}
+.active .container{
+   transform: translateX(-200px);
+}
+.card h1{
+    color: #E8BC0E;
+    font-weight: 100;
+    margin: 0;
+    padding: 0 20px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+.card .checkOut{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+}
+.card .checkOut div{
+    background-color: #E8BC0E;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+.card .checkOut div:nth-child(2){
+    background-color: #1C1F25;
+    color: #fff;
+}
+.listCard li{
+    display: grid;
+    grid-template-columns: 100px repeat(3, 1fr);
+    color: #fff;
+    row-gap: 10px;
+}
+.listCard li div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.listCard li img{
+    width: 90%;
+}
+.listCard li button{
+    background-color: #fff5;
+    border: none;
+}
+.listCard .count{
+    margin: 0 10px;
+}
+a{
+    text-decoration: none;
+    color: #1C1F25;
+}
+    </style>
+</head>
+<body class="">
+
+    <div class="container">
+        <header>
+            <h1>Your Food Menu</h1>
+            <div class="shopping">
+                <img src="data:image/png;base64,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" width="50">
+                <span class="quantity">0</span>
+            </div>
+            <div>
+                <a href="./restaurant.html" >Home</a>
+            </div>
+        </header>
+
+        <div class="list">
+
+        </div>
+    </div>
+
+    <div class="card">
+        <h1>Card</h1>
+        <ul class="listCard">
+        </ul>
+        <div class="checkOut">
+            <div class="total">0</div>
+            <div class="closeShopping">Close</div>
+        </div>
+    </div>
+    <script>
+        let openShopping = document.querySelector('.shopping');
+let closeShopping = document.querySelector('.closeShopping');
+let list = document.querySelector('.list');
+let listCard = document.querySelector('.listCard');
+let body = document.querySelector('body');
+let total = document.querySelector('.total');
+let quantity = document.querySelector('.quantity');
+
+openShopping.addEventListener('click', ()=>{
+    window.location.href = "cart.html"; // Redirect to the new cart page
+});
+
+closeShopping.addEventListener('click', ()=>{
+    body.classList.remove('active');
+})
+let products = [
+    {
+        id: 1,
+        name: 'Pizza',
+        image: "images/pizza-recipe-1.jpg",
+        price: 125
+    },
+    {
+        id: 2,
+        name: 'Mojito',
+        image: "images/Mojito.jpg",
+        price: 60
+    },
+    {
+        id: 3,
+        name: 'Kulcha',
+        image: 'images/Kulcha.jpg',
+        price: 40
+    },
+    {
+        id: 4,
+        name: 'Gobi Manchurian',
+        image: 'images/gobi.png',
+        price: 70
+    },
+    {
+        id: 5,
+        name: 'Veg Soup',
+        image: 'images/Soup.png',
+        price: 65
+    },
+
+    {
+        id: 6,
+        name: 'Chicken Tikka',
+        image: 'images/6.png',
+        price: 120
+    },
+
+    {
+        id: 7,
+        name: 'Fish Fry',
+        image: 'images/7.png',
+        price: 60
+    },
+
+    {
+        id: 8,
+        name: 'Chicken Biryani',
+        image: 'images/8.png',
+        price: 110
+    },
+
+    {
+        id: 9,
+        name: 'Veg Kadai',
+        image: 'images/kadai.jpg',
+        price: 100
+    },
+
+    {
+        id: 10,
+        name: 'Paneer koftha',
+        image: 'images/kofta.webp',
+        price: 100
+    }
+
+
+];
+
+
+let listCards  = [];
+function initApp(){
+    products.forEach((value, key) =>{
+        let newDiv = document.createElement('div');
+        newDiv.classList.add('item');
+        newDiv.innerHTML = `
+            <img src="${value.image}"> 
+            <div class="title">${value.name}</div>
+            <div class="price">${value.price.toLocaleString()}</div>
+            <button onclick="addToCard(${key})">Add To Cart</button>`;
+        list.appendChild(newDiv);
+    });
+}
+
+initApp();
+function addToCard(key) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    let itemIndex = cart.findIndex(item => item.id === products[key].id);
+    if (itemIndex > -1) {
+        cart[itemIndex].quantity += 1;
+    } else {
+        let newItem = { ...products[key], quantity: 1 };
+        cart.push(newItem);
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+}
+
+function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.querySelector('.quantity').innerText = count;
+}
+
+updateCartCount();
+
+function reloadCard(){
+    listCard.innerHTML = '';
+    let count = 0;
+    let totalPrice = 0;
+    listCards.forEach((value, key)=>{
+        if(value != null){
+            totalPrice += value.price;
+            count += value.quantity;
+            let newDiv = document.createElement('li');
+            newDiv.innerHTML = `
+                <div><img src="${value.image}"/></div> 
+                <div>${value.name}</div>
+                <div>${value.price.toLocaleString()}</div>
+                <div>
+                    <button onclick="changeQuantity(${key}, ${value.quantity - 1})">-</button>
+                    <div class="count">${value.quantity}</div>
+                    <button onclick="changeQuantity(${key}, ${value.quantity + 1})">+</button>
+                </div>`;
+            listCard.appendChild(newDiv);
+        }
+    });
+    total.innerText = totalPrice.toLocaleString();
+    quantity.innerText = count;
+}
+
+function changeQuantity(key, quantity){
+    if(quantity == 0){
+        delete listCards[key];
+    }else{
+        listCards[key].quantity = quantity;
+        listCards[key].price = quantity * products[key].price;
+    }
+    reloadCard();
+}
+
+    </script>
+</body>
+</html>
